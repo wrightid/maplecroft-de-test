@@ -4,7 +4,7 @@ Welcome to the maplecroft data engineering techinical test! This project contain
 
 Maplecroft is a global risk analytics company that aims to standardise risk across a variety of different issues across the globe.
 To do this we are often tasked with assigning risk scores to customer provided sites. This inevitably leads to developing 
-pipelines to handle the processing, storing and querying of sites
+pipelines to handle the processing, storing and querying of this data. You have been given a typical ETL pipeline task to develop to solve.
 
 ## Getting started
 
@@ -16,7 +16,7 @@ Start the dev server and initialise the database:
 make init
 ```
 
-You should now be able to access the development server at `localhost:5000`
+You should now be able to access the development server at `http://localhost:5000/auth/login` albeit with an authentication error.
 
 ### Usage
 
@@ -28,10 +28,10 @@ de-test.postman_collection.json
 de-test.postman_environment.json
 ```
 
-and then send the the login request, this will set the token variable automatically and you should then 
-be able to use the users and site request to list data.
+Once imported send the login request to automatically populate the access_token variable. You should now 
+be able to use the `Users` and `Sites` request to list data.
 
-However, if you don't want to use postman or are not familiar with it then the instructions below show the general process.
+However, if you don't want to use postman or are not familiar with it then the instructions below demonstrate the general process.
 
 The project uses Java Web Tokens to manage authentication, go ahead and obtain a token from the login page
 
@@ -39,7 +39,7 @@ The project uses Java Web Tokens to manage authentication, go ahead and obtain a
 curl -X POST -H "Content-Type: application/json" -d '{"username": "admin", "password": "admin"}' http://localhost:5000/auth/login
 ```
 
-This will return something like this
+This will return something like
 
 ```bash
 {
@@ -62,15 +62,15 @@ curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer eyJhbG
 ### Overview
 
 Your task is to create a simple ETL pipeline that extracts site data from the free bike sharing data service CityBikes and allows querying
-of the sites by a polictal adminstrative area (admin area)
-This service exposes bike sharing locations across the world. You will need to extract the data from http://api.citybik.es/v2/networks 
+of these sites by polictal adminstrative area (admin area).
+The CitBikes service exposes bike sharing locations across the world. You will need to extract the data from http://api.citybik.es/v2/networks 
 determine the polictal adminstrative area (admin area) using the [GeoBoundaries](https://www.geoboundaries.org/api.html) dataset and then load into the provided
 sqllite database.
 
 ### Load
 
-An entry point for the script to pull from citybikes api and load into sqllite has been provided for you `api.manage.load_sites`. When complete
-you can run the script with the following command
+An entry point for the script to pull from citybikes api and load into sqllite has been provided for you `api.manage.load_sites`. 
+You will also need to create a database model in `api.api.models.site`. When completed you can run the script with the following command
 
 ```bash
 docker-compose exec web flask api load_sites
