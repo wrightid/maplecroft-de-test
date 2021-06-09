@@ -90,11 +90,13 @@ The admin area code that you have to assign is specified in the geoboundaries re
 ### API
 
 Once you have loaded data into the database you need to expose it through the api. An entry point and url has been 
-created for you `api.api.resources.site.SiteList`.
+created for you. You just need to develop the logic in `api.api.resources.site.SiteList` 
 
 The api should accept a query parameter `?admin_area` which returns all the sites within this admin area
 
 `localhost:5000/api/v1/sites?admin_area=GBR-ADM3-3_0_0-B1`
 
-## Other
+## Notes
+You don't need to be concerned with unit tests for this project. A manual demonstration of an api query will suffice
+
 This project was built using the cookiecutter [flask-restful](https://github.com/karec/cookiecutter-flask-restful) project
