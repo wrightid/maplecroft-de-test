@@ -5,7 +5,7 @@ services:
   web:
     image: api
     build: .
-    command: gunicorn -b 0.0.0.0:5000 api.wsgi:app
+    command: gunicorn -b 0.0.0.0:5000 api.wsgi:app --reload
     env_file:
       - ./.flaskenv
     environment:
