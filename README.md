@@ -20,8 +20,16 @@ You should now be able to access the development server at `localhost:5000`
 
 ### Usage
 
-The most convenient way to interact with the api is to use the Postman configuration provided. Simply import *bla* and 
-login first, you should then be able to use the users and site request to list data.
+The most convenient way to interact with the api is to use the Postman configuration provided. First import the following
+two files into postman
+
+```bash
+de-test.postman_collection.json
+de-test.postman_environment.json
+```
+
+and then send the the login request, this will set the token variable automatically and you should then 
+be able to use the users and site request to list data.
 
 However, if you don't want to use postman or are not familiar with it then the instructions below show the general process.
 
