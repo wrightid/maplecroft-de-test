@@ -76,7 +76,7 @@ You will also need to create a database model in `api.api.models.site`. When com
 docker-compose exec web flask api load_sites
 ```
 
-You only have to assign admin level 3. For example to get the admin level 3 data for Great Britain:
+You only have to assign up to admin level 3 (feel free to reduce if required). For example to get the admin level 3 data for Great Britain:
 
 `https://www.geoboundaries.org/gbRequest.html?ISO=GBR&ADM=ADM3`
 
