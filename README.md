@@ -97,6 +97,5 @@ The api should accept a query parameter `?admin_area` which returns all the site
 `localhost:5000/api/v1/sites?admin_area=GBR-ADM3-3_0_0-B1`
 
 ## Notes
-You don't need to be concerned with unit tests for this project. A manual demonstration of an api query will suffice
 
 This project was built using the cookiecutter [flask-restful](https://github.com/karec/cookiecutter-flask-restful) project
