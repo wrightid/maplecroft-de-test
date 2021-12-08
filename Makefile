@@ -1,4 +1,4 @@
-.PHONY: init init-migration build run db-migrate test tox
+.PHONY: init init-migration build run db-migrate db-upgrade db-revision test tox
 
 init:  build run
 	docker-compose exec web flask db upgrade
@@ -16,6 +16,10 @@ db-migrate:
 
 db-upgrade:
 	docker-compose exec web flask db upgrade
+
+# e.g. make db-revision ARGS='-m "create sites table"'
+db-revision:
+	docker-compose exec web flask db revision $(ARGS)
 
 test:
 	docker-compose run -v $(PWD)/tests:/code/tests:ro web tox -e test
