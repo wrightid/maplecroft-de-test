@@ -1,4 +1,6 @@
 
+Define marshmallow schema for site and return all sites
+
 Add requests to requirements for remote API access
 
 migrations/versions, models/site.py - define site table, uses string for coordinates due to SQLlite limitations
