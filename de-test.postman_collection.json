@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "d9b056f7-a60d-4060-9d02-28044c49a698",
+		"_postman_id": "2090c12b-8d54-4c2d-9155-a179d1beea73",
 		"name": "de-test",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -26,15 +26,16 @@
 			],
 			"request": {
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"username\": \"{{username}}\",\n    \"password\": \"{{password}}\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
+					"raw": "{\n    \"username\": \"{{username}}\",\n    \"password\": \"{{password}}\"\n}"
 				},
 				"url": {
 					"raw": "{{api_url}}/auth/login",
@@ -102,6 +103,41 @@
 						"api",
 						"v1",
 						"sites"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Sites with filter",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{api_url}}/api/v1/sites?admin_area=GBR-ADM3-3_0_0-B1327",
+					"host": [
+						"{{api_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"sites"
+					],
+					"query": [
+						{
+							"key": "admin_area",
+							"value": "GBR-ADM3-3_0_0-B1327"
+						}
 					]
 				}
 			},
