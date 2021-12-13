@@ -20,9 +20,11 @@ def init():
     db.session.commit()
     click.echo("created user admin")
 
+
 @cli.command("load_sites")
+@click.option("--adm3", is_flag=True, help="ADM3 only")
 @with_appcontext
-def load_sites():
+def load_sites(adm3):
     """
     We need to pull all sites from the bikes api
 
@@ -38,7 +40,23 @@ def load_sites():
 
     :return:
     """
-    pass
+    from api.data_import import DataImport
+
+    importer = DataImport()
+
+    try:
+        importer.load_data()
+    except Exception as e:
+        # Just print the response if the connection fail
+        print("Unable to get data")
+        print(e)
+        return
+
+    levels = []
+    if adm3:
+        levels.append("ADM3")
+    importer.import_all_data(levels)
+
 
 if __name__ == "__main__":
     cli()

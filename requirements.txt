@@ -12,3 +12,6 @@ apispec[yaml]
 apispec-webframeworks
 tox
 gunicorn
+geopandas==0.10.2
+requests==2.26.0
+Rtree==0.9.7

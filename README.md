@@ -54,6 +54,11 @@ You can use access_token to access protected endpoints :
 curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiYWNjZXNzIiwiaWRlbnRpdHkiOjEsImlhdCI6MTUxMDAwMDQ0MSwiZnJlc2giOmZhbHNlLCJqdGkiOiI2OTg0MjZiYi00ZjJjLTQ5MWItYjE5YS0zZTEzYjU3MzFhMTYiLCJuYmYiOjE1MTAwMDA0NDEsImV4cCI6MTUxMDAwMTM0MX0.P-USaEIs35CSVKyEow5UeXWzTQTrrPS_YjVsltqi7N4" http://127.0.0.1:5000/api/v1/users
 ```
 
+To combine the curl commands you can use:
+
+```bash
+curl -s -X POST -H "Content-Type: application/json" -d '{"username": "admin", "password": "admin"}' http://localhost:5000/auth/login | jq '.access_token' | tr -d '\n' | xargs -I{} curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer {}" http://127.0.0.1:5000/api/v1/sites?admin_area=CAN-ADM3-3_0_0-B1806
+```
 
 ---
 
@@ -83,7 +88,7 @@ You only have to assign up to admin level 3 (feel free to reduce if required). F
 The admin area code that you have to assign is specified in the geoboundaries response as shapeID. Example:
 
 ```json
-{ "shapeID": "GBR-ADM3-3_0_0-B1" }
+{ "shapeID": "GBR-ADM3-3_0_0-B1327" }
 ```
 
 
@@ -94,7 +99,7 @@ created for you. You just need to develop the logic in `api.api.resources.site.S
 
 The api should accept a query parameter `?admin_area` which returns all the sites within this admin area
 
-`localhost:5000/api/v1/sites?admin_area=GBR-ADM3-3_0_0-B1`
+`localhost:5000/api/v1/sites?admin_area=GBR-ADM3-3_0_0-B1327`
 
 ## Notes
 

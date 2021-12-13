@@ -157,5 +157,3 @@ class UserList(Resource):
         db.session.commit()
 
         return {"msg": "user created", "user": schema.dump(user)}, 201
-
-
