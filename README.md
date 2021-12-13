@@ -88,7 +88,7 @@ You only have to assign up to admin level 3 (feel free to reduce if required). F
 The admin area code that you have to assign is specified in the geoboundaries response as shapeID. Example:
 
 ```json
-{ "shapeID": "GBR-ADM3-3_0_0-B1" }
+{ "shapeID": "GBR-ADM3-3_0_0-B1327" }
 ```
 
 
@@ -99,7 +99,7 @@ created for you. You just need to develop the logic in `api.api.resources.site.S
 
 The api should accept a query parameter `?admin_area` which returns all the sites within this admin area
 
-`localhost:5000/api/v1/sites?admin_area=GBR-ADM3-3_0_0-B1`
+`localhost:5000/api/v1/sites?admin_area=GBR-ADM3-3_0_0-B1327`
 
 ## Notes
 
