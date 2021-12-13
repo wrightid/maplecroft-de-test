@@ -51,8 +51,10 @@ class SiteList(Resource):
 
         # Build the query one step at a time
         query = Site.query
-        query = query.join(AreaSite)
-        query = query.filter(AreaSite.area_id == admin_area)
+        if admin_area:
+            query = query.join(AreaSite)
+            query = query.filter(AreaSite.area_id == admin_area)
+
         query = query.order_by(Site.name)
 
         return paginate(query, schema)

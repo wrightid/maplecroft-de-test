@@ -32,12 +32,3 @@ class AreaFactory(factory.Factory):
 
     class Meta:
         model = Area
-
-
-class AreaSiteFactory(factory.Factory):
-
-    area_id = factory.Sequence(lambda n: "area%d" % (n % 5))
-    site_id = factory.Sequence(lambda n: "site%d" % n)
-
-    class Meta:
-        model = AreaSite
