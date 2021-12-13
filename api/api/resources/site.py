@@ -5,7 +5,7 @@ from flask_restful import Resource
 
 from api.api.schemas import SiteSchema
 
-from api.models import Site
+from api.models import Site, AreaSite
 from api.commons.pagination import paginate
 
 
@@ -47,8 +47,12 @@ class SiteList(Resource):
         if 'admin_area' in request.args:
             admin_area = request.args["admin_area"]
 
-        print(admin_area)
-
         schema = SiteSchema(many=True)
+
+        # Build the query one step at a time
         query = Site.query
+        query = query.join(AreaSite)
+        query = query.filter(AreaSite.area_id == admin_area)
+        query = query.order_by(Site.name)
+
         return paginate(query, schema)

@@ -6,11 +6,13 @@ from api.models import User
 from api.app import create_app
 from api.extensions import db as _db
 from pytest_factoryboy import register
-from tests.factories import UserFactory
+from tests.factories import UserFactory, SiteFactory, AreaFactory, AreaSiteFactory
 
 
 register(UserFactory)
-
+register(SiteFactory)
+register(AreaFactory)
+register(AreaSiteFactory)
 
 @pytest.fixture(scope="session")
 def app():

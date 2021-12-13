@@ -23,8 +23,9 @@ def init():
 
 
 @cli.command("load_sites")
+@click.option('--adm3', is_flag=True, help="ADM3 only")
 @with_appcontext
-def load_sites():
+def load_sites(adm3):
     """
     We need to pull all sites from the bikes api
 
@@ -40,40 +41,22 @@ def load_sites():
 
     :return:
     """
-    from api.extensions import db
-    from api.models.site import Site
-    from api.remote import get_networks
+    from api.data_import import DataImport
+
+    importer = DataImport()
 
     try:
-        networks = get_networks
+        importer.load_data()
     except Exception as e:
         # Just print the response if the connection fail
-        print("Unable to get site data")
+        print("Unable to get data")
         print(e)
         return
 
-    # Assume we'll just replace any existing data
-    # We know that we've got data because of no exception above
-    # No TRUNCATE in SQLlite
-    # db.engine.execute("TRUNCATE TABLE site;")
-    db.engine.execute("DELETE FROM site;")
-
-    i = 0
-    for network in networks():
-        site = Site()
-        site.id = network["id"]
-        site.name = network["name"]
-        site.latitude = network["location"]["latitude"]
-        site.longitude = network["location"]["longitude"]
-        site.country = network["location"]["country"]
-        db.session.add(site)
-        i += 1
-        # Commit every 50
-        # Not really necessary with such a small result set
-        if i % 50 == 0:
-            db.session.commit()
-    db.session.commit()
-    print(f'{i} sites loaded')
+    levels = []
+    if adm3:
+        levels.append("ADM3")
+    importer.import_all_data(levels)
 
 
 if __name__ == "__main__":

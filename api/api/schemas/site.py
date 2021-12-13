@@ -8,4 +8,4 @@ class SiteSchema(ma.SQLAlchemyAutoSchema):
         model = Site
         sqla_session = db.session
         load_instance = True
-        fields = ("id", "name")
+        fields = ("id", "name", "latitude", "longitude")
