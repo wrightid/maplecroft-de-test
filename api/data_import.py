@@ -14,7 +14,6 @@ from api.models import AreaSite
 
 
 class DataImport(object):
-
     def __init__(self) -> None:
 
         self.networks_api = "http://api.citybik.es/v2/networks"
@@ -24,8 +23,8 @@ class DataImport(object):
         self.networks = None
 
         self.logger = logging.getLogger(__name__)
-    
-    def load_data(self):
+
+    def load_data(self) -> None:
         """load_data - make initial API calls and make sure they work"""
         try:
             r = requests.get(self.networks_api)
@@ -45,7 +44,7 @@ class DataImport(object):
             self.logger.error("Unable to get boundary data", exc_info=1)
             raise e
 
-    def get_networks(self):
+    def get_networks(self) -> Generator[Dict, None, None]:
         """get_networks - a generator to return the sites from the downloaded
         data"""
         #
@@ -93,14 +92,11 @@ class DataImport(object):
             x = Decimal(site.longitude)
             site_coords.append(Point(x, y))
 
-        sites = geopandas.GeoDataFrame({
-            "name": site_names,
-            "geometry": site_coords
-        })
+        sites = geopandas.GeoDataFrame({"name": site_names, "geometry": site_coords})
 
         return sites
 
-    def load_sites_to_db(self):
+    def load_sites_to_db(self) -> List[Site]:
         # Assume we'll just replace any existing data
         # We know that we've got data because of no exception above
         # No TRUNCATE in SQLlite
@@ -127,11 +123,11 @@ class DataImport(object):
                 db.session.commit()
         db.session.commit()
 
-        print(f'{i} sites loaded')
+        print(f"{i} sites loaded")
 
         return sites
 
-    def insert_feature(self, feature):
+    def insert_feature(self, feature) -> None:
         """insert_feature - inserts a feature (area) into the database
 
         :param feature:
@@ -147,7 +143,7 @@ class DataImport(object):
 
         db.session.add(area)
 
-    def import_all_data(self, levels: List[str]):
+    def import_all_data(self, levels: List[str]) -> None:
         """import_all_data as previously fetched using load_data into the
         database
 
@@ -161,7 +157,7 @@ class DataImport(object):
 
         self.load_and_link_areas(geo_sites, levels)
 
-    def insert_point_area(self, point_id, shape_id):
+    def insert_point_area(self, point_id, shape_id) -> None:
         """insert_point_area - create a new relationship between a site and an
         area
 
@@ -175,7 +171,9 @@ class DataImport(object):
 
         db.session.add(relationship)
 
-    def load_and_link_areas(self, sites: geopandas.GeoDataFrame, levels: List[str]):
+    def load_and_link_areas(
+        self, sites: geopandas.GeoDataFrame, levels: List[str]
+    ) -> None:
         """load_and_link_areas
                 Clear out existing data and sites with the previously loaded
                 geo data
@@ -200,15 +198,19 @@ class DataImport(object):
 
             self.logger.info("%d in %s", len(results), area)
 
-            results.apply(lambda row: self.insert_point_area(row['name'], row['shapeID']), axis=1)
+            results.apply(
+                lambda row: self.insert_point_area(row["name"], row["shapeID"]), axis=1
+            )
 
             db.session.commit()
 
             j += 1
 
-        print(f'{j} boundaries loaded')
+        print(f"{j} boundaries loaded")
 
-    def get_sites_in_area(self, sites: geopandas.GeoDataFrame, area: Dict) -> geopandas.GeoDataFrame:
+    def get_sites_in_area(
+        self, sites: geopandas.GeoDataFrame, area: Dict
+    ) -> geopandas.GeoDataFrame:
         """get_sites_in_area - get all the sites in an area
 
         :param sites:

@@ -1,11 +1,13 @@
 from api.extensions import db
 
 from sqlalchemy import Column, String
+
 # from geoalchemy2 import Geometry
 
 
 class Site(db.Model):
     """Basic Site model"""
+
     id = Column(String(128), primary_key=True)
     name = Column(String(128), nullable=False)
     country = Column(String(2), nullable=False)
